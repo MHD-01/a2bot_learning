@@ -1,7 +1,49 @@
 # a2bot_learning
 
 
+## Install ROS 2 Humble
 
+
+```bash
+sudo apt update && sudo apt install -y curl gnupg lsb-release
+sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key \
+  -o /usr/share/keyrings/ros-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] \
+  http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" \
+  | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+sudo apt update
+sudo apt install -y ros-humble-desktop
+```
+
+`ros-humble-desktop` includes RViz, demos, and simulators — everything Part 1 needs.
+
+## Source it
+
+Sourcing must happen in **every new terminal** before ROS 2 commands work. Add it to your shell startup so it happens automatically:
+
+
+```bash
+echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+```
+
+## Verify
+
+
+```bash
+ros2 doctor --report
+```
+
+If this prints a report without complaining that `ros2` is an unknown command, sourcing worked.
+
+## Install turtlesim
+
+The next page uses `turtlesim`, ROS 2's classic teaching simulator — a small window with a turtle you drive around, standing in for a real robot without needing any hardware.
+
+
+```bash
+sudo apt install -y ros-humble-turtlesim
+```
 
 ## Install SSH on your laptop first
 
@@ -24,7 +66,6 @@ If that prints a version string, you're all set.
 
 ROS2 can run on several different DDS implementations underneath, and two machines must use the *same* one to discover each other reliably. Cyclone DDS is used here because it is what the robots themselves are already configured with — a mismatched RMW implementation between a laptop and a robot is a real, silent cause of "why can't I see any topics" that matches no error message.
 
-### 💻 Laptop
 
 Install:
 ```bash
